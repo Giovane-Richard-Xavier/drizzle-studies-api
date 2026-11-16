@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1794838059531,
-      "tag": "0000_reflective_warhawk",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1794838293216,
-      "tag": "0001_tiresome_dragon_lord",
+      "when": 1794846249321,
+      "tag": "0000_clammy_gorgon",
       "breakpoints": true
     }
   ]
