@@ -1,11 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { usersTable } from 'src/db/schema';
+import { db } from 'src/libs/drizzle';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(dto: CreateUserDto) {
+    type userInsert = typeof usersTable.$inferInsert;
+
+    const newUser: userInsert = {
+      name: dto.name,
+      email: dto.email,
+      age: dto.age,
+    };
+
+    const user = await db.insert(usersTable).values(newUser);
+
+    if (!user) {
+      throw new BadRequestException('Add user error!');
+    }
+
+    return {
+      error: null,
+      user,
+    };
   }
 
   findAll() {
