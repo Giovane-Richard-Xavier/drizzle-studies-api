@@ -1,8 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { usersTable } from 'src/db/schema';
 import { db } from 'src/libs/drizzle';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class UsersService {
@@ -27,19 +32,50 @@ export class UsersService {
     };
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findUserByEmail(email: string) {
+    const user = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email));
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findAll() {
+    const users = await db.select().from(usersTable);
+
+    return users;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async findOne(id: string) {
+    // SELECT  FROM table WHERE id = x
+    const user = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.id, id));
+
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+
+    return user;
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    // UPDATE Table SET campo = WHERE id = x
+    // await db
+    //   .update(usersTable)
+    //   .set({ age: 43 })
+    //   .where(eq(usersTable.email, updateUserDto.email));
+
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 }
