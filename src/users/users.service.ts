@@ -1,14 +1,14 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { eq, count, asc } from 'drizzle-orm';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { usersTable } from 'src/db/schema';
 import { db } from 'src/libs/drizzle';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class UsersService {
@@ -48,10 +48,39 @@ export class UsersService {
     return user;
   }
 
-  async findAll() {
-    const users = await db.select().from(usersTable);
+  async findAll(query: PaginationDto) {
+    const { page, limit } = query;
 
-    return users;
+    const offset = (page - 1) * limit;
+
+    const [users, totalResult] = await Promise.all([
+      db
+        .select()
+        .from(usersTable)
+        .orderBy(asc(usersTable.id))
+        .limit(limit)
+        .offset(offset),
+
+      db.select({ total: count() }).from(usersTable),
+    ]);
+
+    // total de registros
+    const total = totalResult[0].total;
+
+    // total pages
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      users,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPreviousPage: page > 1,
+      },
+    };
   }
 
   async findOne(id: string) {

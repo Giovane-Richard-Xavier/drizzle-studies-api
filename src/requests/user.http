@@ -14,8 +14,8 @@ Content-Type: application/json
 ### GET user by email
 GET {{baseUrl}}/users/{{id}}
 
-### GET all users
-GET {{baseUrl}}/users
+### GET all users paginated
+GET {{baseUrl}}/users?page=1&limit=10
 
 ### PATCH user
 PATCH {{baseUrl}}/users/{{id}}
