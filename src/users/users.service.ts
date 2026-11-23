@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,18 +13,20 @@ import { eq } from 'drizzle-orm';
 @Injectable()
 export class UsersService {
   async create(dto: CreateUserDto) {
-    type userInsert = typeof usersTable.$inferInsert;
-
-    const newUser: userInsert = {
+    const newUser: typeof usersTable.$inferInsert = {
       name: dto.name,
       email: dto.email,
       age: dto.age,
     };
 
-    const user = await db.insert(usersTable).values(newUser);
+    const [user] = await db
+      .insert(usersTable)
+      .values(newUser)
+      .onConflictDoNothing({ target: usersTable.email })
+      .returning();
 
     if (!user) {
-      throw new BadRequestException('Add user error!');
+      throw new ConflictException('Email already registered.');
     }
 
     return {

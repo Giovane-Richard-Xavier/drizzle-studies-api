@@ -6,9 +6,9 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "name": "Giovane Richard",
-  "email": "giovanerichard@gmail.com",
-  "age": 42
+  "name": "User teste",
+  "email": "userteste@gmail.com",
+  "age": 30
 }
 
 ### GET user by email
@@ -22,6 +22,6 @@ PATCH {{baseUrl}}/users/{{id}}
 Content-Type: application/json
 
 {
-  "name": "Gione Richard Xavier",
+  "name": "Giovane Richard Xavier",
   "age": 43
 }
