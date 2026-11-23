@@ -66,13 +66,23 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    // UPDATE Table SET campo = WHERE id = x
-    // await db
-    //   .update(usersTable)
-    //   .set({ age: 43 })
-    //   .where(eq(usersTable.email, updateUserDto.email));
+    // verifica se usuário existe
+    const userExist = await this.findOne(id);
 
-    return `This action updates a #${id} user`;
+    if (!userExist) {
+      throw new NotFoundException('User not found.');
+    }
+
+    // UPDATE Table SET campo = WHERE id = x
+    const [userUpdated] = await db
+      .update(usersTable)
+      .set({
+        ...updateUserDto,
+      })
+      .where(eq(usersTable.id, id))
+      .returning();
+
+    return userUpdated;
   }
 
   remove(id: string) {

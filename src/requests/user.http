@@ -16,3 +16,12 @@ GET {{baseUrl}}/users/{{id}}
 
 ### GET all users
 GET {{baseUrl}}/users
+
+### PATCH user
+PATCH {{baseUrl}}/users/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Gione Richard Xavier",
+  "age": 43
+}
