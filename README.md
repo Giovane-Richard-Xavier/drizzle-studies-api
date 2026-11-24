@@ -184,7 +184,8 @@ src/
 Retorna uma mensagem de demonstração.
 
 ```bash
-curl http://localhost:3001/
+
+    http://localhost:3001/
 ```
 
 Resposta:
@@ -210,8 +211,10 @@ Cria um novo usuário.
 Exemplo:
 
 ```bash
-POST http://localhost:3001/users \
-  -H "Content-Type: application/json" \
+POST
+
+  http://localhost:3001/users \
+  "Content-Type: application/json" \
   '{
     "name": "Usuário Teste",
     "email": "usuarioteste@example.com",
@@ -233,7 +236,8 @@ Parâmetros opcionais:
 Exemplo:
 
 ```bash
- "http://localhost:3001/users?page=1&limit=10"
+
+  "http://localhost:3001/users?page=1&limit=10"
 ```
 
 Resposta:
@@ -263,7 +267,8 @@ Resposta:
 Consulta um usuário pelo UUID.
 
 ```bash
- http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
+
+   http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
 ```
 
 #### `PATCH /users/:id`
@@ -281,9 +286,11 @@ Atualiza parcialmente um usuário.
 Exemplo:
 
 ```bash
- PATCH http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217 \
-  -H "Content-Type: application/json" \
-  -d '{
+ PATCH
+
+    http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217 \
+   "Content-Type: application/json" \
+  '{
     "name": "Novo nome",
     "age": 31
   }'
@@ -294,7 +301,9 @@ Exemplo:
 Solicita a remoção de um usuário.
 
 ```bash
-  DELETE http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
+  DELETE
+
+  http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
 ```
 
 > Atualmente, esta rota retorna uma mensagem informativa e ainda não remove o registro do banco.
