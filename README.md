@@ -201,8 +201,8 @@ Cria um novo usuário.
 
 ```json
 {
-  "name": "Giovane Richard Xavier",
-  "email": "giovane@example.com",
+  "name": "Usuário Teste",
+  "email": "usuarioteste@example.com",
   "age": 30
 }
 ```
@@ -210,11 +210,11 @@ Cria um novo usuário.
 Exemplo:
 
 ```bash
-curl -X POST http://localhost:3001/users \
+POST http://localhost:3001/users \
   -H "Content-Type: application/json" \
-  -d '{
-    "name": "Giovane Richard Xavier",
-    "email": "giovane@example.com",
+  '{
+    "name": "Usuário Teste",
+    "email": "usuarioteste@example.com",
     "age": 30
   }'
 ```
@@ -233,7 +233,7 @@ Parâmetros opcionais:
 Exemplo:
 
 ```bash
-curl "http://localhost:3001/users?page=1&limit=10"
+ "http://localhost:3001/users?page=1&limit=10"
 ```
 
 Resposta:
@@ -243,8 +243,8 @@ Resposta:
   "users": [
     {
       "id": "8fda3422-a0de-41d7-b8aa-5fb3f8a52217",
-      "name": "giovane richard xavier",
-      "email": "giovane@example.com"
+      "name": "Usuário Teste",
+      "email": "usuarioteste@example.com"
     }
   ],
   "meta": {
@@ -263,7 +263,7 @@ Resposta:
 Consulta um usuário pelo UUID.
 
 ```bash
-curl http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
+ http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
 ```
 
 #### `PATCH /users/:id`
@@ -281,7 +281,7 @@ Atualiza parcialmente um usuário.
 Exemplo:
 
 ```bash
-curl -X PATCH http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217 \
+ PATCH http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217 \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Novo nome",
@@ -294,7 +294,7 @@ curl -X PATCH http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217 \
 Solicita a remoção de um usuário.
 
 ```bash
-curl -X DELETE http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
+  DELETE http://localhost:3001/users/8fda3422-a0de-41d7-b8aa-5fb3f8a52217
 ```
 
 > Atualmente, esta rota retorna uma mensagem informativa e ainda não remove o registro do banco.
