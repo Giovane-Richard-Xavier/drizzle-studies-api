@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { eq, count, asc, sql } from 'drizzle-orm';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { usersTable } from 'src/db/schema';
+import { petTable, usersTable } from 'src/db/schema';
 import { db } from 'src/libs/drizzle';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -55,12 +55,9 @@ export class UsersService {
 
     const [users, totalResult] = await Promise.all([
       db
-        .select({
-          id: usersTable.id,
-          name: sql<string>`lower(${usersTable.name})`,
-          email: usersTable.email,
-        })
+        .select()
         .from(usersTable)
+        .leftJoin(petTable, eq(petTable.ownerId, usersTable.id))
         .orderBy(asc(usersTable.id))
         .limit(limit)
         .offset(offset),

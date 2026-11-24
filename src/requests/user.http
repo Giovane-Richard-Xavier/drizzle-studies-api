@@ -6,9 +6,9 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "name": "User teste",
-  "email": "userteste@gmail.com",
-  "age": 30
+  "name": "User teste 02",
+  "email": "userteste02@gmail.com",
+  "age": 33
 }
 
 ### GET user by email
