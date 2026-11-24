@@ -1,0 +1,1 @@
+ALTER TABLE "pets" ALTER COLUMN "ownerId" SET DATA TYPE uuid;

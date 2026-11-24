@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { eq, count, asc } from 'drizzle-orm';
+import { eq, count, asc, sql } from 'drizzle-orm';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { usersTable } from 'src/db/schema';
 import { db } from 'src/libs/drizzle';
@@ -55,7 +55,11 @@ export class UsersService {
 
     const [users, totalResult] = await Promise.all([
       db
-        .select()
+        .select({
+          id: usersTable.id,
+          name: sql<string>`lower(${usersTable.name})`,
+          email: usersTable.email,
+        })
         .from(usersTable)
         .orderBy(asc(usersTable.id))
         .limit(limit)
