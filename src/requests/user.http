@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:3001
+@id = b50a1555-6313-4751-8917-e003b0b3a1db
+
+### Create User
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Jhon Due",
+  "email": "jhondue@gmail.com",
+  "age": 38
+}
+
+### GET user by email
+GET {{baseUrl}}/users/{{id}}
+
+### GET all users paginated
+GET {{baseUrl}}/users?page=1&limit=10
+
+### PATCH user
+PATCH {{baseUrl}}/users/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Giovane Richard Xavier",
+  "age": 43
+}
+
+### POST deposit between users
+POST {{baseUrl}}/users/deposit
