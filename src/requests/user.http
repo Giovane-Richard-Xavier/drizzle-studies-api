@@ -26,5 +26,5 @@ Content-Type: application/json
   "age": 43
 }
 
-### POST deposit bettwen users
+### POST deposit between users
 POST {{baseUrl}}/users/deposit
