@@ -6,9 +6,9 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "name": "User teste 02",
-  "email": "userteste02@gmail.com",
-  "age": 33
+  "name": "Jhon Due",
+  "email": "jhondue@gmail.com",
+  "age": 38
 }
 
 ### GET user by email
@@ -25,3 +25,6 @@ Content-Type: application/json
   "name": "Giovane Richard Xavier",
   "age": 43
 }
+
+### POST deposit bettwen users
+POST {{baseUrl}}/users/deposit

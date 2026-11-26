@@ -22,6 +22,11 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Post('/deposit')
+  deposit() {
+    return this.usersService.deposit();
+  }
+
   @Get()
   findAll(@Query() query: PaginationDto) {
     return this.usersService.findAll(query);

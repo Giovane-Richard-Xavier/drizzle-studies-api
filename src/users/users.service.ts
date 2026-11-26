@@ -35,6 +35,14 @@ export class UsersService {
     };
   }
 
+  async deposit() {
+    await this.transfer(
+      35,
+      'b626a0a8-94aa-44a4-b898-b34b8da6fdbc',
+      '17bbc1ab-ed30-41ce-9f16-9dea76b9dfff',
+    );
+  }
+
   async findUserByEmail(email: string) {
     const user = await db
       .select()
@@ -120,5 +128,29 @@ export class UsersService {
 
   remove(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async transfer(value: number, userFrom: string, userTo: string) {
+    await db.transaction(async (tx) => {
+      const [account] = await tx
+        .select({ balance: usersTable.balance })
+        .from(usersTable)
+        .where(eq(usersTable.id, userFrom));
+
+      if (account.balance && account.balance < value) {
+        tx.rollback();
+      }
+
+      // débito
+      await tx
+        .update(usersTable)
+        .set({ balance: sql`${usersTable.balance} - ${value}` })
+        .where(eq(usersTable.id, userFrom));
+      // crédito
+      await tx
+        .update(usersTable)
+        .set({ balance: sql`${usersTable.balance} + ${value}` })
+        .where(eq(usersTable.id, userTo));
+    });
   }
 }
